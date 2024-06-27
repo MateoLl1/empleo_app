@@ -8,9 +8,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Computrabajo'),
+        title: Text('JobMatch',style: textStyle.titleLarge,),
         actions: [
           IconButton.filledTonal(
             onPressed: (){}, icon: const Icon(Icons.person)
