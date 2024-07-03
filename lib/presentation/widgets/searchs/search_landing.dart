@@ -1,6 +1,5 @@
 
 
-import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SearchLanding extends StatelessWidget {

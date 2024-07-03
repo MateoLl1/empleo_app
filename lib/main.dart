@@ -1,7 +1,7 @@
-import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:empleo_app/config/config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:empleo_app/presentation/providers/providers.dart';
 
 void main(){
   runApp(const ProviderScope(child: MyApp()));

@@ -44,6 +44,11 @@ class AppTheme {
       bodyMedium: GoogleFonts.montserrat(
         color: isDark ? Colors.white : Colors.black
       ),
+      
+      //ERROR DE VALIDATOR EN FIELDS
+      bodySmall: GoogleFonts.montserrat(
+        color: isDark ? Colors.white : Colors.black
+      ),
     )
   );
 

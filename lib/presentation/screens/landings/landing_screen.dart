@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:empleo_app/presentation/providers/providers.dart';
+import 'package:go_router/go_router.dart';
 
 
 class LandingPageScreen extends ConsumerWidget {
@@ -30,7 +31,7 @@ class LandingPageScreen extends ConsumerWidget {
           ),
           OutlinedButton(
             child: const Text('Crear CV'),
-            onPressed: (){}, 
+            onPressed: ()=> context.go('/login'), 
           ),
           
           const SizedBox(width: 10,)
