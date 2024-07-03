@@ -53,6 +53,7 @@ class _HomeView extends StatelessWidget {
       child: Column(
         children: [
       
+          SearchLanding(),
           _Bienvenida(),
           _About(),
           FooterApp()

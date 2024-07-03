@@ -1,5 +1,7 @@
 # empleo_app
 
+    flutter upgrade
+
 A new Flutter project.
 
 ## Getting Started
