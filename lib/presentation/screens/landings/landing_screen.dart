@@ -1,5 +1,6 @@
 
 
+import 'package:empleo_app/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
@@ -101,7 +102,8 @@ class _Bienvenida extends StatelessWidget {
             ],
           ),
           
-          const FlutterLogo(size: 400,)
+          // const FlutterLogo(size: 400,)
+          Image.network('https://cp.ct-stc.com/web/v01.04.01.05/c/img/encontrar_empleo.webp')
       
         ],
       ),
@@ -116,7 +118,11 @@ class _About extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
-    return SizedBox(
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        color: colors.onPrimary
+      ),
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +145,7 @@ class _About extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
       
-              const FlutterLogo(size: 500,),
+              Image.network('https://th.bing.com/th/id/OIP.RXcjphjyvZX4VRGYoa6VFgHaDf?rs=1&pid=ImgDetMain'),
               const SizedBox(width: 20,),
               SizedBox(
                 width: size.width*.5,

@@ -8,17 +8,37 @@ class FooterApp extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            // ignore: deprecated_member_use
-            color: colors.onBackground,
-            width: 0.5,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: Icon(Icons.facebook, color: colors.primary),
+                onPressed: () {
+                  // Acción al presionar el icono de Facebook
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.email, color: colors.primary),
+                onPressed: () {
+                  // Acción al presionar el icono de Twitter
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.apple, color: colors.primary),
+                onPressed: () {
+                  // Acción al presionar el icono de LinkedIn
+                },
+              ),
+            ],
           ),
-        ),
-      ),
-      child: const Center(
-        child: Text('Copyright 2014 - 2024 DGNET LTD.'),
+          const SizedBox(height: 20),
+          const Center(
+            child: Text('Copyright 2014 - 2024 DGNET LTD.'),
+          ),
+        ],
       ),
     );
   }
