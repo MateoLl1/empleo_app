@@ -1,11 +1,14 @@
 
+
+
+
 import 'package:flutter/material.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:empleo_app/presentation/screens/painters/painters.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RecuperarPassword extends StatelessWidget {
+  const RecuperarPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class LoginScreen extends StatelessWidget {
             right: 16.0,
             child: IconButton(
               icon: const Icon(Icons.close,size: 50,),
-              onPressed: () => context.go('/landing'),
+              onPressed: () => context.go('/login'),
             ),
           ),
         ],
@@ -69,7 +72,7 @@ class _FormViewState extends State<_FormView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Iniciar Session',
+                'Recuperar Contraseña',
                 style: textStyle.titleLarge?.copyWith(fontSize: 40),
               ),
               CustomTextFormField(
@@ -92,20 +95,6 @@ class _FormViewState extends State<_FormView> {
                   return null;
                 },
               ),
-              CustomTextFormField(
-                focusNode: focusPassword,
-                label: 'Contraseña',
-                hintText: '********',
-                icon: Icons.key,
-                onChanged: (value) {
-                  password = value.trim();
-                  formKey.currentState?.validate();
-                },
-                validator: (value) {
-                  if (value!.trim().isEmpty) return 'Campo requerido';
-                  return null;
-                },
-              ),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
@@ -118,32 +107,7 @@ class _FormViewState extends State<_FormView> {
               const SizedBox(height: 30),
 
 
-              Wrap(
-                alignment: WrapAlignment.end,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () => context.go('/recuperar-password'),
-                    child: const Text(
-                      '¡Olvide mi contraseña!',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    ),
-                  ),
-                  const SizedBox(width: 50,),
-                  InkWell(
-                    onTap: () => context.go('/register'),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Crear una cuenta'),
-                        SizedBox(width: 10),
-                        Icon(Icons.arrow_forward),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              
             ],
           ),
         ),

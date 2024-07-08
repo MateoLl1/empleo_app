@@ -1,9 +1,8 @@
-import 'package:empleo_app/presentation/screens/ia/resume_section.dart';
 import 'package:go_router/go_router.dart';
 import 'package:empleo_app/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/resume',
+  initialLocation: '/landing',
   routes: [
     GoRoute(
       path: '/',
@@ -26,11 +25,9 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/resume',
-      builder: (context, state) => MyResume(),
+      path: '/recuperar-password',
+      builder: (context, state) => const RecuperarPassword(),
     ),
 
-    
-    
   ]
 );

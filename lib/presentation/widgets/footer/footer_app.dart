@@ -7,6 +7,7 @@ class FooterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
+      color: colors.onInverseSurface,
       padding: const EdgeInsets.symmetric(vertical: 40),
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,5 @@
 
 
-import 'package:empleo_app/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
@@ -14,6 +13,7 @@ class LandingPageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context,ref) {
     final isDark = ref.watch(darkModeProvider);
+    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
@@ -22,6 +22,7 @@ class LandingPageScreen extends ConsumerWidget {
         child: const Icon(Icons.light_mode),
       ),
       appBar: AppBar(
+        backgroundColor: colors.onInverseSurface,
         leading: const Icon(Icons.work),
         title: const Text('JobMatch'),
         actions: [
@@ -51,14 +52,20 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    final size = MediaQuery.of(context).size;
+    return  SingleChildScrollView(
       child: Column(
         children: [
       
-          SearchLanding(),
-          _Bienvenida(),
-          _About(),
-          FooterApp()
+          const SearchLanding(),
+          const _Bienvenida(),
+          CuadradoLineaDesign(margin: EdgeInsets.symmetric(
+            horizontal: size.width*.1,
+            vertical: 70
+          ),
+          ),
+          const _About(),
+          const FooterApp()
 
         ],
       ),
@@ -121,7 +128,7 @@ class _About extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: colors.onPrimary
+        color: colors.surface
       ),
       width: double.infinity,
       child: Column(

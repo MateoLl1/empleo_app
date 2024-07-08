@@ -5,7 +5,7 @@ class CustomTextFormField extends StatelessWidget {
   final String label;
   final String? hintText;
   final IconData icon;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
@@ -16,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.icon, 
     this.keyboardType,
     this.hintText, 
-    required this.focusNode, 
+    this.focusNode, 
     this.validator, 
     this.onChanged, 
     this.onFieldSubmitted, 
