@@ -1,4 +1,5 @@
 
+import 'package:empleo_app/presentation/widgets/helpers/validar_cedula_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:empleo_app/presentation/screens/painters/painters.dart';
@@ -50,11 +51,15 @@ class _FormView extends StatefulWidget {
 
 class _FormViewState extends State<_FormView> {
   final formKey = GlobalKey<FormState>();
-  final focusEmail = FocusNode();
-  final focusCedula = FocusNode();
-  final focusPassword = FocusNode();
+  // final focusEmail = FocusNode();
+  // final focusCedula = FocusNode();
+  // final focusPassword = FocusNode();
   String email = '';
   String password = '';
+  String confirmar = '';
+  String cedula = '';
+  String nombre = '';
+  String apellido = '';
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +78,40 @@ class _FormViewState extends State<_FormView> {
                 'Registro',
                 style: textStyle.titleLarge?.copyWith(fontSize: 40),
               ),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Nombre',
+                      validator: (value) {
+                        if (value!.trim().isEmpty) return 'Campo requerido'; 
+                        return null;
+                      },
+                      onChanged: (value) {
+                        nombre = value;
+                        formKey.currentState?.validate();
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10,),
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Apellido',
+                      validator: (value) {
+                        if (value!.trim().isEmpty) return 'Campo requerido'; 
+                        return null;
+                      },
+                      onChanged: (value) {
+                        apellido = value;
+                        formKey.currentState?.validate();
+                      },
+                    ),
+                  ),
+                  
+                ],
+              ),
+
               CustomTextFormField(
-                focusNode: focusEmail,
                 label: 'Correo electronico',
                 hintText: 'ejemplo@gmail.com',
                 icon: Icons.person,
@@ -94,27 +131,17 @@ class _FormViewState extends State<_FormView> {
                 },
               ),
               CustomTextFormField(
-                focusNode: focusCedula,
                 label: 'Cedula o ruc',
                 hintText: '',
+                keyboardType: TextInputType.number,
                 icon: Icons.document_scanner,
                 onChanged: (value) {
-                  email = value.trim();
+                  cedula = value.trim();
                   formKey.currentState?.validate();
                 },
-                validator: (value) {
-                  if (value == null) return 'Campo requerido';
-                  if (value.trim().isEmpty) return 'Campo requerido';
-                  final emailRegExp = RegExp(
-                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                  );
-                  if (!emailRegExp.hasMatch(value.trim())) return 'Email invalido';
-
-                  return null;
-                },
+                validator: validarCedulaEcuatoriana,
               ),
               CustomTextFormField(
-                focusNode: focusPassword,
                 label: 'Contraseña',
                 hintText: '********',
                 icon: Icons.key,
@@ -127,12 +154,28 @@ class _FormViewState extends State<_FormView> {
                   return null;
                 },
               ),
+              CustomTextFormField(
+                label: 'Confirmar contraseña',
+                hintText: '********',
+                icon: Icons.key,
+                onChanged: (value) {
+                  confirmar = value.trim();
+                  formKey.currentState?.validate();
+                },
+                validator: (value) {
+                  if (value!.trim().isEmpty) return 'Campo requerido';
+                  if(confirmar != password) return 'Contraseñas no coinciden';
+                  return null;
+                },
+              ),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
                   child: const Text('Registarme'),
                   onPressed: () {
-                    formKey.currentState?.validate();
+                    final isValid = formKey.currentState?.validate();
+                    if(!isValid!) return;
+                    
                   },
                 ),
               ),
