@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 
+/cedulas-nrc-15305.txt
 # IntelliJ related
 *.iml
 *.ipr

@@ -11,9 +11,13 @@ class ApiJavaDatasource extends ApiDatasource {
 
   @override
   Future<List<Provincia>> getAllProvincias()async {
-    final response = await _dio.get('/provincia');
-    final List<Provincia> provincias = [];
-    return provincias.map((e) => ProvinciaMapper.toEntity(response.data)).toList();
+    try {
+      final response = await _dio.get('/provincia');
+      final List<dynamic> data = response.data;
+      return data.map((e) => ProvinciaMapper.toEntity(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   @override

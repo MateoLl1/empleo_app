@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:empleo_app/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/landing',
+  initialLocation: '/loading',
   routes: [
     GoRoute(
       path: '/',
@@ -27,6 +27,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/recuperar-password',
       builder: (context, state) => const RecuperarPassword(),
+    ),
+
+    GoRoute(
+      path: '/loading',
+      builder: (context, state) => const LoadingScreen(),
     ),
 
   ]
