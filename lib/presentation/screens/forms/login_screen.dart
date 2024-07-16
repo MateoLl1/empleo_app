@@ -1,7 +1,11 @@
 
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:empleo_app/presentation/screens/painters/painters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -41,14 +45,14 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class _FormView extends StatefulWidget {
+class _FormView extends ConsumerStatefulWidget {
   const _FormView();
 
   @override
-  State<_FormView> createState() => _FormViewState();
+  _FormViewState createState() => _FormViewState();
 }
 
-class _FormViewState extends State<_FormView> {
+class _FormViewState extends ConsumerState<_FormView> {
   final formKey = GlobalKey<FormState>();
   final focusEmail = FocusNode();
   final focusPassword = FocusNode();
@@ -110,8 +114,16 @@ class _FormViewState extends State<_FormView> {
                 width: double.infinity,
                 child: FilledButton(
                   child: const Text('Iniciar'),
-                  onPressed: () {
-                    formKey.currentState?.validate();
+                  onPressed: () async{
+                    final isValid = formKey.currentState?.validate();
+                    if(!isValid!) return;
+                    final apiRes = await ref.read(userSessionProvider.notifier).login(email, password);
+                    if(!apiRes) {
+                      customSnackBarMessage(context, 'Credenciales incorrectas');
+                    }
+                    customSnackBarMessage(context, 'Bienvenido');
+                    context.go('/home');
+
                   },
                 ),
               ),

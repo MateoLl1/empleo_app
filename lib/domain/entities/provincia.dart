@@ -1,22 +1,22 @@
-
-
 class Provincia {
   final int? id;
-  final String nombre;
+  final String? nombre;
 
   Provincia({
     required this.id, 
-    required this.nombre
+    this.nombre,
   });
+
+  @override
+  String toString() {
+    return 'Provincia{id: $id, nombre: $nombre}';
+  }
 
   Provincia copyWith({
     int? id,
-    String? nombre
+    String? nombre,
   }) => Provincia(
     id: id ?? this.id, 
-    nombre: nombre ?? this.nombre
+    nombre: nombre ?? this.nombre,
   );
-
-  
-
 }

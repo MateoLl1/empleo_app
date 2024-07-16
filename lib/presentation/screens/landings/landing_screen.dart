@@ -7,11 +7,22 @@ import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:go_router/go_router.dart';
 
 
-class LandingPageScreen extends ConsumerWidget {
+class LandingPageScreen extends ConsumerStatefulWidget {
   const LandingPageScreen ({super.key});
 
   @override
-  Widget build(BuildContext context,ref) {
+  LandingPageScreenState createState() => LandingPageScreenState();
+}
+
+class LandingPageScreenState extends ConsumerState<LandingPageScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(provinciaProvider.notifier).getProvincia();
+    ref.read(tpUsuarioProvider.notifier).getTpUsuarios();
+  }
+  @override
+  Widget build(BuildContext context) {
     final isDark = ref.watch(darkModeProvider);
     final colors = Theme.of(context).colorScheme;
     return Scaffold(

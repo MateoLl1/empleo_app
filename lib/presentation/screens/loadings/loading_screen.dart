@@ -27,7 +27,7 @@ class LoadingScreenState extends ConsumerState<LoadingScreen> {
           itemCount: provincias.length,
           itemBuilder: (BuildContext context, int index) {
             final provincia = provincias[index];
-            return ListTile(title: Text(provincia.nombre),);
+            return ListTile(title: Text(provincia.nombre!),);
           },
         ),
       ): const Center(child: CircularProgressIndicator(),)

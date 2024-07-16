@@ -1,8 +1,14 @@
 
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:empleo_app/domain/domain.dart';
+import 'package:empleo_app/presentation/providers/data/provincia_provider.dart';
+import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:empleo_app/presentation/widgets/helpers/validar_cedula_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:empleo_app/presentation/screens/painters/painters.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -42,14 +48,14 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-class _FormView extends StatefulWidget {
+class _FormView extends ConsumerStatefulWidget {
   const _FormView();
 
   @override
-  State<_FormView> createState() => _FormViewState();
+  _FormViewState createState() => _FormViewState();
 }
 
-class _FormViewState extends State<_FormView> {
+class _FormViewState extends ConsumerState<_FormView> {
   final formKey = GlobalKey<FormState>();
   // final focusEmail = FocusNode();
   // final focusCedula = FocusNode();
@@ -61,10 +67,21 @@ class _FormViewState extends State<_FormView> {
   String nombre = '';
   String apellido = '';
 
+  int posicionProv = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(provinciaProvider.notifier).getProvincia();
+    ref.read(tpUsuarioProvider.notifier).getTpUsuarios();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
+    final proviciasProvider = ref.watch(provinciaProvider);
+    final colors = Theme.of(context).colorScheme;
     return SizedBox(
       width: size.width >=800 ? size.width * .55 : size.width*.9,
       child: Padding(
@@ -111,36 +128,72 @@ class _FormViewState extends State<_FormView> {
                 ],
               ),
 
-              CustomTextFormField(
-                label: 'Correo electronico',
-                hintText: 'ejemplo@gmail.com',
-                icon: Icons.person,
-                onChanged: (value) {
-                  email = value.trim();
-                  formKey.currentState?.validate();
-                },
-                validator: (value) {
-                  if (value == null) return 'Campo requerido';
-                  if (value.trim().isEmpty) return 'Campo requerido';
-                  final emailRegExp = RegExp(
-                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                  );
-                  if (!emailRegExp.hasMatch(value.trim())) return 'Email invalido';
+               CustomTextFormField(
+                 label: 'Correo electronico',
+                 hintText: 'ejemplo@gmail.com',
+                 icon: Icons.person,
+                 onChanged: (value) {
+                   email = value.trim();
+                   formKey.currentState?.validate();
+                 },
+                 validator: (value) {
+                   if (value == null) return 'Campo requerido';
+                   if (value.trim().isEmpty) return 'Campo requerido';
+                   final emailRegExp = RegExp(
+                     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                   );
+                   if (!emailRegExp.hasMatch(value.trim())) return 'Email invalido';
+               
+                   return null;
+                 },
+               ),
 
-                  return null;
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: CustomTextFormField(
+                      label: 'Cedula o ruc',
+                      hintText: '',
+                      keyboardType: TextInputType.number,
+                      icon: Icons.document_scanner,
+                      onChanged: (value) {
+                        cedula = value.trim();
+                        formKey.currentState?.validate();
+                      },
+                      validator: validarCedulaEcuatoriana,
+                    ),
+                  ),
+                 
+                  Expanded(
+                    child: DropdownButton(
+                      dropdownColor: colors.inversePrimary,
+                      value: posicionProv,
+                      borderRadius: BorderRadius.circular(10),
+                      padding: const EdgeInsets.all(10),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      items: [
+                        const DropdownMenuItem(
+                          value: 0,
+                          child: Text('Provincia'),
+                        ),
+                        ...proviciasProvider.map(
+                          (e) => DropdownMenuItem(
+                            value: e.id,
+                            child: Text(e.nombre!),
+                          ),
+                        )
+                      ], 
+                      onChanged: (value) {
+                        posicionProv = value!;
+                        setState(() {});
+                      },
+                    ),
+                  ),      
+                ],
               ),
-              CustomTextFormField(
-                label: 'Cedula o ruc',
-                hintText: '',
-                keyboardType: TextInputType.number,
-                icon: Icons.document_scanner,
-                onChanged: (value) {
-                  cedula = value.trim();
-                  formKey.currentState?.validate();
-                },
-                validator: validarCedulaEcuatoriana,
-              ),
+              
               CustomTextFormField(
                 label: 'Contraseña',
                 hintText: '********',
@@ -172,10 +225,26 @@ class _FormViewState extends State<_FormView> {
                 width: double.infinity,
                 child: FilledButton(
                   child: const Text('Registarme'),
-                  onPressed: () {
+                  onPressed: ()async {
                     final isValid = formKey.currentState?.validate();
-                    if(!isValid!) return;
-                    
+                    if(!isValid! && posicionProv!=0) return;
+                    final user = Usuario(
+                      nombre: nombre, 
+                      email: email, 
+                      password: password, 
+                      cedula: cedula,
+                      estado: 'A',
+                      feRegistro: DateTime.now(),
+                      provincia: Provincia(id: posicionProv,),
+                      tpUsuario: TpUsuario(id: 7,)
+                    );
+                    print(user.toString());
+                    final apiRes = await ref.read(userSessionProvider.notifier).save(user);
+                    if (!apiRes) {
+                      customSnackBarMessage(context, 'Error al registrar');
+                    }
+                    customSnackBarMessage(context, 'Usuario registrado');
+                    context.go('/home');
                   },
                 ),
               ),
