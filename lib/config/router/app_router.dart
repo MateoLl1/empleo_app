@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:empleo_app/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/landing',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/home',

@@ -115,11 +115,13 @@ class _FormViewState extends ConsumerState<_FormView> {
                 child: FilledButton(
                   child: const Text('Iniciar'),
                   onPressed: () async{
-                    final isValid = formKey.currentState?.validate();
-                    if(!isValid!) return;
-                    final apiRes = await ref.read(userSessionProvider.notifier).login(email, password);
-                    if(!apiRes) {
+                    // final isValid = formKey.currentState?.validate();
+                    // if(!isValid!) return;
+                    // final apiRes = await ref.read(userSessionProvider.notifier).login(email, password);
+                    final apiRes = await ref.read(userSessionProvider.notifier).login('mateollerena40@gmail.com', '123456');
+                    if(apiRes == false) {
                       customSnackBarMessage(context, 'Credenciales incorrectas');
+                      return;
                     }
                     customSnackBarMessage(context, 'Bienvenido');
                     context.go('/home');

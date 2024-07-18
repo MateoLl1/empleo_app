@@ -238,10 +238,10 @@ class _FormViewState extends ConsumerState<_FormView> {
                       provincia: Provincia(id: posicionProv,),
                       tpUsuario: TpUsuario(id: 7,)
                     );
-                    print(user.toString());
                     final apiRes = await ref.read(userSessionProvider.notifier).save(user);
                     if (!apiRes) {
                       customSnackBarMessage(context, 'Error al registrar');
+                      return;
                     }
                     customSnackBarMessage(context, 'Usuario registrado');
                     context.go('/home');

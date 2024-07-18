@@ -19,7 +19,7 @@ class UserNotifier extends StateNotifier<List<Usuario>> {
 
   Future<bool> login(String email,String password)async{
     final response = await repository.loginUser(email, password);
-    if (response!.id != null) {
+    if (response != null && response.id != null) {
       state = [response];
       return true;
     }
@@ -28,7 +28,7 @@ class UserNotifier extends StateNotifier<List<Usuario>> {
 
   Future<bool> save(Usuario user)async{
     final response = await repository.saveUsuario(user);
-    if (response!.id != null) {
+    if (response != null && response.id != null) {
       state = [response];
       return true;
     }

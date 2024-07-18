@@ -20,7 +20,7 @@ class Usuario {
     required this.email,
     required this.password,
     required this.cedula,
-    this.imagen = '',
+    this.imagen = 'https://www.nicepng.com/png/full/128-1280406_user-icon-png.png',
     this.feNacimiento = '',
     this.feRegistro,
     this.sexo = '?',
