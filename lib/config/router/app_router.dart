@@ -31,7 +31,12 @@ final appRouter = GoRouter(
 
     GoRoute(
       path: '/loading',
-      builder: (context, state) => const LoadingScreen(),
+      builder: (context, state) => const LoadingLoginScreen(),
+    ),
+
+    GoRoute(
+      path: '/administracion',
+      builder: (context, state) => const AdminScreen(),
     ),
 
     GoRoute(

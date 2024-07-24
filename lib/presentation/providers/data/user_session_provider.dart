@@ -3,8 +3,8 @@
 
 
 import 'package:empleo_app/domain/domain.dart';
-import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:empleo_app/presentation/providers/providers.dart';
 
 final userSessionProvider = StateNotifierProvider<UserNotifier,List<Usuario>>((ref) {
   final repository = ref.watch(apiRepositoryProvider);
@@ -33,6 +33,16 @@ class UserNotifier extends StateNotifier<List<Usuario>> {
       return true;
     }
     return false;
+  }
+
+  Usuario? getUserSession() {
+    if (state.isNotEmpty) {
+      final user = state.first;
+      if (user.id != null) {
+        return user;
+      }
+    }
+    return null;
   }
 
   

@@ -2,7 +2,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:empleo_app/domain/domain.dart';
-import 'package:empleo_app/presentation/providers/data/provincia_provider.dart';
 import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:empleo_app/presentation/widgets/helpers/validar_cedula_helper.dart';
 import 'package:flutter/material.dart';

@@ -77,7 +77,6 @@ class ApiJavaDatasource extends ApiDatasource {
       final Map<String, dynamic> userData = response.data;
       return UsuarioMapper.toEntity(userData);
     } catch (e) {
-      print(e);
       return null;
     }
   }
