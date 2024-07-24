@@ -34,5 +34,10 @@ final appRouter = GoRouter(
       builder: (context, state) => const LoadingScreen(),
     ),
 
+    GoRoute(
+      path: '/crud-user',
+      builder: (context, state) => const CrudUsuarioScreen(),
+    ),
+
   ]
 );
