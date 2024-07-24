@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:empleo_app/presentation/screens/screens.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/landing',
   routes: [
     GoRoute(
       path: '/home',
@@ -42,6 +42,15 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/crud-user',
       builder: (context, state) => const CrudUsuarioScreen(),
+    ),
+
+    GoRoute(
+      path: '/crud-tp-user',
+      builder: (context, state) => const  CrudTpUsuarioScreen(),
+    ),
+    GoRoute(
+      path: '/crud-provincia',
+      builder: (context, state) => const  CrudProvinciaScreen(),
     ),
 
   ]

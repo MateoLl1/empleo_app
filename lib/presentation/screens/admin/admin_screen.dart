@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:empleo_app/presentation/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:empleo_app/presentation/widgets/widgets.dart';
 
 
 class AdminScreen extends StatelessWidget {
@@ -40,12 +40,12 @@ class AdminScreen extends StatelessWidget {
                 IconCard(
                   icon: Icons.supervisor_account,
                   label: 'Tipos de usuario',
-                  onTap: () => context.go('/crud-user'),
+                  onTap: () => context.go('/crud-tp-user'),
                 ),
                 IconCard(
                   icon: Icons.flag,
                   label: 'Provincias',
-                  onTap: () => context.go('/crud-user'),
+                  onTap: () => context.go('/crud-provincia'),
                 ),
               ],
             ),
