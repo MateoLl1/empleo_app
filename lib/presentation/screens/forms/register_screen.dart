@@ -228,7 +228,7 @@ class _FormViewState extends ConsumerState<_FormView> {
                     final isValid = formKey.currentState?.validate();
                     if(!isValid! && posicionProv!=0) return;
                     final user = Usuario(
-                      nombre: nombre, 
+                      nombre: '$nombre $apellido', 
                       email: email, 
                       password: password, 
                       cedula: cedula,

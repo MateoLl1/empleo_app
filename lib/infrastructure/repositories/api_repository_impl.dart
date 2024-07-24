@@ -28,4 +28,14 @@ class ApiRepositoryImpl extends ApiRepository {
     return datasource.saveUsuario(user);
   }
   
+  @override
+  Future<List<Usuario>> getAllUsers() {
+    return datasource.getAllUsers();
+  }
+  
+  @override
+  Future<bool> deleteUserById(int id) {
+    return datasource.deleteUserById(id);
+  }
+  
 }

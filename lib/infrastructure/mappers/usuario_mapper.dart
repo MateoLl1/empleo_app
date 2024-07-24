@@ -8,7 +8,7 @@ class UsuarioMapper {
         password: json['password'],
         cedula: json['cedula'],
         imagen: json['imagen'],
-        feNacimiento: json['feNacimiento'],
+        feNacimiento: DateTime.tryParse(json['feNacimiento'] ?? ''),
         feRegistro: DateTime.tryParse(json['feRegistro'] ?? ''),
         sexo: json['sexo'],
         estado: json['estado'],

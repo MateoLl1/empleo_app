@@ -59,7 +59,7 @@ class ApiJavaDatasource extends ApiDatasource {
           'password': user.password,
           'cedula': user.cedula,
           'imagen': user.imagen,
-          'feNacimiento': user.feNacimiento,
+          'feNacimiento': user.feNacimiento?.toIso8601String(),
           'feRegistro': user.feRegistro?.toIso8601String(),
           'sexo': user.sexo,
           'estado': user.estado,
@@ -77,7 +77,35 @@ class ApiJavaDatasource extends ApiDatasource {
       final Map<String, dynamic> userData = response.data;
       return UsuarioMapper.toEntity(userData);
     } catch (e) {
+      print(e);
       return null;
+    }
+  }
+  
+  @override
+  Future<List<Usuario>> getAllUsers()async {
+    try {
+      final response = await _dio.get('/usuario');
+      final List<dynamic> data = response.data;
+      return data.map((e) => UsuarioMapper.toEntity(e)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+  
+  @override
+  Future<bool> deleteUserById(int id)async {
+    try {
+      final response = await _dio.delete(
+        '/usuario',
+        queryParameters: {
+          'id':id
+        }
+      );
+      return response.data;
+    } catch (e) {
+      print(e);
+      return false;
     }
   }
   

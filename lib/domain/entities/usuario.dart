@@ -7,7 +7,7 @@ class Usuario {
   String password;
   String cedula;
   String? imagen;
-  String? feNacimiento;
+  DateTime? feNacimiento;
   DateTime? feRegistro;
   String? sexo;
   String? estado;
@@ -21,7 +21,7 @@ class Usuario {
     required this.password,
     required this.cedula,
     this.imagen = 'https://www.nicepng.com/png/full/128-1280406_user-icon-png.png',
-    this.feNacimiento = '',
+    this.feNacimiento,
     this.feRegistro,
     this.sexo = '?',
     this.estado = 'A',
@@ -44,7 +44,7 @@ class Usuario {
     String? password,
     String? cedula,
     String? imagen,
-    String? feNacimiento,
+    DateTime? feNacimiento,
     DateTime? feRegistro,
     String? sexo,
     String? estado,

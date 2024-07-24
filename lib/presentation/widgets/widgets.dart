@@ -11,4 +11,5 @@ export './buttons/dark_mode_button.dart';
 export './combobox/provincia_box.dart';
 export './combobox/tipo_usuario_box.dart';
 export './combobox/sexo_box.dart';
+export './table/user_table.dart';
 

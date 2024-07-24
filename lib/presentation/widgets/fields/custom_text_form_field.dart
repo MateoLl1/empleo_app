@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 class CustomTextFormField extends StatelessWidget {
   final String label;
   final String? hintText;
@@ -11,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
+  final String defaultValue; // Nuevo parámetro
 
   const CustomTextFormField({
     super.key,
@@ -22,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onFieldSubmitted,
+    this.defaultValue = '',
   });
 
   @override
@@ -29,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
+        initialValue: defaultValue,
         focusNode: focusNode,
         keyboardType: keyboardType,
         inputFormatters: keyboardType == TextInputType.number

@@ -11,5 +11,10 @@ abstract class ApiDatasource {
   Future<Usuario?> saveUsuario(Usuario user);
   
   Future<Usuario?> loginUser(String emai,String password);
+  
+  Future<List<Usuario>> getAllUsers();
+
+  Future<bool> deleteUserById(int id);
+
 
 }

@@ -1,7 +1,13 @@
 
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:empleo_app/domain/domain.dart';
+import 'package:empleo_app/presentation/providers/data/user_session_provider.dart';
+import 'package:empleo_app/presentation/widgets/helpers/validar_cedula_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:empleo_app/presentation/providers/data/user_provider.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
 
 class CrudUsuarioScreen extends ConsumerStatefulWidget {
@@ -15,11 +21,12 @@ class CrudUsuarioScreenState extends ConsumerState<CrudUsuarioScreen> {
   @override
   void initState() {
     super.initState();
-    
+    ref.read(userProvider.notifier).getUsers();
   }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final users = ref.watch(userProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
@@ -37,9 +44,10 @@ class CrudUsuarioScreenState extends ConsumerState<CrudUsuarioScreen> {
       ),
       appBar: AppBar(title: const Text('Administracion de usuarios'),),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: users.length,
         itemBuilder: (BuildContext context, int index) {
-          return Placeholder();
+          final user = users[index];
+          return UserTable(user: user,index: index + 1,);
         },
       ),
     );
@@ -48,19 +56,39 @@ class CrudUsuarioScreenState extends ConsumerState<CrudUsuarioScreen> {
 
 
 
-class UserFormView extends StatefulWidget {
+class UserFormView extends ConsumerStatefulWidget {
+  final Usuario? user;
   const UserFormView({
-    super.key,
+    super.key, this.user,
   });
 
   @override
-  State<UserFormView> createState() => _UserFormViewState();
+  UserFormViewState createState() => UserFormViewState();
 }
 
-class _UserFormViewState extends State<UserFormView> {
+class UserFormViewState extends ConsumerState<UserFormView> {
 
   final _formKey = GlobalKey<FormState>();
+  String nombre = '';
+  String apellido = '';
+  String email = '';
+  String cedula = '';
+  int tpUsuario = 0;
+  int provincia = 0;
+  dynamic genero = 0;
+  DateTime? fechaNaci;
 
+  @override
+  void initState() {
+    super.initState();
+    nombre = widget.user?.nombre ?? '';
+    apellido = widget.user?.nombre ?? '';
+    email = widget.user?.email ?? '';
+    cedula = widget.user?.cedula ?? '';
+    tpUsuario = widget.user?.tpUsuario?.id ?? 0;
+    provincia = widget.user?.provincia?.id ?? 0;
+    genero = widget.user?.sexo ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,18 +105,51 @@ class _UserFormViewState extends State<UserFormView> {
               Text('Nuevo usuario',style: textStyle.titleLarge,),
               const Divider(),
               const CircleAvatar(maxRadius: 50,),
-              const Row(
+              Row(
                 children: [
-                  Expanded(child: CustomTextFormField(label: 'Nombre')),
-                  SizedBox(width: 5,),
-                  Expanded(child: CustomTextFormField(label: 'Apellido')),
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Nombre',
+                      defaultValue: nombre,
+                      onChanged: (p0) {
+                        nombre = p0;
+                      },
+                    )
+                  ),
+                  const SizedBox(width: 5,),
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Apellido',
+                      defaultValue: apellido,
+                      onChanged: (p0) {
+                        apellido = p0;
+                      },
+                    )
+                  ),
                 ],
               ),
-              const Row(
+              Row(
                 children: [
-                  Expanded(child: CustomTextFormField(label: 'Correo electronico')),
-                  SizedBox(width: 5,),
-                  Expanded(child: CustomTextFormField(label: 'Cedula')),
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Correo electronico',
+                      defaultValue: email,
+                      onChanged: (p0) {
+                        email = p0;
+                      },
+                    )
+                  ),
+                  const SizedBox(width: 5,),
+                  Expanded(
+                    child: CustomTextFormField(
+                      label: 'Cedula',
+                      onChanged: (p0) {
+                        cedula = p0;
+                      },
+                      validator: validarCedulaEcuatoriana,
+                      defaultValue: cedula,
+                    )
+                  ),
                 ],
               ),
               
@@ -96,26 +157,27 @@ class _UserFormViewState extends State<UserFormView> {
                 children: [
                   TipoUsuarioBox(
                     onSelected: (p0) {
+                      tpUsuario = p0;
                     },
                   ),
                   ProvinciaBox(
                     onSelected: (p0) {
-                      
+                      provincia = p0;
                     },
                   ),
                   SexoBox(
                     onSelected: (p0) {
-                      print(p0);
+                      genero = p0;
                     },
                   ),
               
                   Expanded(
                     child: CalendarDatePicker(
-                      initialDate: null,
+                      initialDate: fechaNaci,
                       firstDate: DateTime(1950, 1, 1), 
                       lastDate: DateTime.now(),
                       onDateChanged: (value) {
-                        print('Fecha seleccionada: $value');
+                        fechaNaci = value;
                       },
                     ),
                   ),
@@ -131,7 +193,38 @@ class _UserFormViewState extends State<UserFormView> {
                     child: const Text('Cancelar'),
                   ),
                   OutlinedButton(
-                    onPressed: (){}, 
+                    onPressed: ()async{
+                      if (
+                        nombre== '' || apellido == '' || 
+                        cedula=='' || email =='' || 
+                        tpUsuario == 0 || provincia == 0 || 
+                        fechaNaci == null || genero == 0
+                      ) {
+                        customSnackBarMessage(context, 'Llene todos los campos');
+                      }else{
+                        final user = Usuario(
+                          nombre: '$nombre $apellido', 
+                          email: email, 
+                          password: cedula, 
+                          cedula: cedula,
+                          estado: 'A',
+                          feNacimiento: fechaNaci,
+                          feRegistro: DateTime.now(),
+                          id: widget.user?.id ?? 0,
+                          provincia: Provincia(id: provincia),
+                          tpUsuario: TpUsuario(id: tpUsuario),
+                          sexo: genero
+                        );
+                        final response = await ref.read(userSessionProvider.notifier).save(user);
+                        if (!response) {
+                          customSnackBarMessage(context, 'Error de conexion');
+                          return;
+                        }else{
+                          ref.read(userProvider.notifier).getUsers();
+                          context.pop();
+                        }
+                      }
+                    }, 
                     child: const Text('Agregar'),
                   ),
                 ],

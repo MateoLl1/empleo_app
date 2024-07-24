@@ -11,4 +11,8 @@ abstract class ApiRepository {
   
   Future<Usuario?> loginUser(String emai,String password);
 
+  Future<List<Usuario>> getAllUsers();
+
+  Future<bool> deleteUserById(int id);
+
 }
