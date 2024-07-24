@@ -11,7 +11,7 @@ class IconCard extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme;
     final colors = Theme.of(context).colorScheme;
     return InkWell(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Card(
         color: colors.inversePrimary,
         elevation: 4,

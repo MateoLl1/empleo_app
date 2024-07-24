@@ -8,4 +8,7 @@ export './buttons/icon_text_button.dart';
 export './buttons/text_button_divider.dart';
 export './cards/icon_card.dart';
 export './buttons/dark_mode_button.dart';
+export './combobox/provincia_box.dart';
+export './combobox/tipo_usuario_box.dart';
+export './combobox/sexo_box.dart';
 

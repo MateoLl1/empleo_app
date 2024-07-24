@@ -1,34 +1,37 @@
 
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:empleo_app/presentation/providers/providers.dart';
 
-class ProvinciaBox extends ConsumerStatefulWidget {
+class TipoUsuarioBox extends ConsumerStatefulWidget {
   final Function(int) onSelected;
-  const ProvinciaBox({
+  const TipoUsuarioBox({
     super.key,
     required this.onSelected
   });
 
   @override
-  ProvinciaBoxState createState() => ProvinciaBoxState();
+  TipoUsuarioBoxState createState() => TipoUsuarioBoxState();
 }
 
-class ProvinciaBoxState extends ConsumerState<ProvinciaBox> {
+class TipoUsuarioBoxState extends ConsumerState<TipoUsuarioBox> {
 
   int selected = 0;
 
   @override
   void initState() {
     super.initState();
-    ref.read(provinciaProvider.notifier).getProvincia();
+    ref.read(tpUsuarioProvider.notifier).getTpUsuarios();
   }
 
   @override
   Widget build(BuildContext context) {
-    final provincias = ref.watch(provinciaProvider);
+    final tpUsuarios = ref.watch(tpUsuarioProvider);
     final colors = Theme.of(context).colorScheme;
-    return  provincias.isNotEmpty 
+    return  tpUsuarios.isNotEmpty 
     ? DropdownButton(
       dropdownColor: colors.inversePrimary,
       borderRadius: BorderRadius.circular(10),
@@ -38,9 +41,9 @@ class ProvinciaBoxState extends ConsumerState<ProvinciaBox> {
       items: [
         const DropdownMenuItem(
           value: 0,
-          child: Text('Provincias'),
+          child: Text('Tipo de usuario'),
         ),
-        ...provincias.map(
+        ...tpUsuarios.map(
           (e) => DropdownMenuItem(
             value: e.id,
             child: Text(e.nombre!),
