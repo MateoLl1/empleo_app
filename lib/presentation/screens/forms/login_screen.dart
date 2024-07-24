@@ -123,8 +123,7 @@ class _FormViewState extends ConsumerState<_FormView> {
                       customSnackBarMessage(context, 'Credenciales incorrectas');
                       return;
                     }
-                    customSnackBarMessage(context, 'Bienvenido');
-                    context.go('/home');
+                    context.go('/loading');
 
                   },
                 ),

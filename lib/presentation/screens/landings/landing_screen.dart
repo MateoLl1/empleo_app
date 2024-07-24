@@ -30,7 +30,9 @@ class LandingPageScreenState extends ConsumerState<LandingPageScreen> {
         onPressed: (){
           ref.read(darkModeProvider.notifier).state = !isDark;
         },
-        child: const Icon(Icons.light_mode),
+        child: isDark 
+          ? const Icon(Icons.dark_mode)
+          : const Icon(Icons.light_mode),
       ),
       appBar: AppBar(
         backgroundColor: colors.onInverseSurface,
