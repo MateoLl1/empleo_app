@@ -77,7 +77,6 @@ class ApiJavaDatasource extends ApiDatasource {
       final Map<String, dynamic> userData = response.data;
       return UsuarioMapper.toEntity(userData);
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -104,8 +103,41 @@ class ApiJavaDatasource extends ApiDatasource {
       );
       return response.data;
     } catch (e) {
-      print(e);
       return false;
+    }
+  }
+  
+  @override
+  Future<bool> deleteProvinciaByID(int id)async {
+    try {
+      final response = await _dio.delete(
+        '/provincia',
+        queryParameters: {
+          'id':id
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return false;
+    }
+  }
+  
+  
+  @override
+  Future<Provincia?> saveProvincia(Provincia provincia)async {
+    try {
+      final response = await _dio.post(
+        '/provincia',
+        data: {
+          'id':provincia.id,
+          'nombre':provincia.nombre,
+        }
+      );
+      final newProv = ProvinciaMapper.toEntity(response.data);
+      return newProv;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
   

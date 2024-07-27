@@ -12,4 +12,5 @@ export './combobox/provincia_box.dart';
 export './combobox/tipo_usuario_box.dart';
 export './combobox/sexo_box.dart';
 export './table/user_table.dart';
-
+export './alerts/custom_alert.dart';
+export './table/custom_row_provincia.dart';

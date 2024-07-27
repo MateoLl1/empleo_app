@@ -18,4 +18,19 @@ class ProvinciaNotifier extends StateNotifier<List<Provincia>> {
     state = [...provincias];
   }
 
+  Future<bool> deleteProvicinciaById(int id)async{
+    final response = await repository.deleteProvinciaByID(id);
+    getProvincia();
+    return response;
+  }
+
+  Future<Provincia?> save(Provincia provincia)async{
+    final response = await repository.saveProvincia(provincia);
+    if (response != null) {
+      state = [...state,response];
+      return provincia;
+    }
+    return null;
+  }
+
 }

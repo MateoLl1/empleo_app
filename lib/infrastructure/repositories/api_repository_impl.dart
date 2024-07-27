@@ -38,4 +38,15 @@ class ApiRepositoryImpl extends ApiRepository {
     return datasource.deleteUserById(id);
   }
   
+  @override
+  Future<bool> deleteProvinciaByID(int id) {
+    return datasource.deleteProvinciaByID(id);
+  }
+  
+  
+  @override
+  Future<Provincia?> saveProvincia(Provincia provincia) {
+    return datasource.saveProvincia(provincia);
+  }
+  
 }

@@ -16,5 +16,10 @@ abstract class ApiDatasource {
 
   Future<bool> deleteUserById(int id);
 
+  Future<Provincia?> saveProvincia(Provincia provincia);
+
+  Future<bool> deleteProvinciaByID(int id);
+
+
 
 }
