@@ -113,6 +113,11 @@ class UserFormViewState extends ConsumerState<UserFormView> {
                       defaultValue: nombre,
                       onChanged: (p0) {
                         nombre = p0;
+                        _formKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value!.trim().isEmpty) return 'Campo requerido';
+                        return null;
                       },
                     )
                   ),
@@ -123,6 +128,11 @@ class UserFormViewState extends ConsumerState<UserFormView> {
                       defaultValue: apellido,
                       onChanged: (p0) {
                         apellido = p0;
+                        _formKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value!.trim().isEmpty) return 'Campo requerido';
+                        return null;
                       },
                     )
                   ),
@@ -136,6 +146,17 @@ class UserFormViewState extends ConsumerState<UserFormView> {
                       defaultValue: email,
                       onChanged: (p0) {
                         email = p0;
+                        _formKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value == null) return 'Campo requerido';
+                        if (value.trim().isEmpty) return 'Campo requerido';
+                        final emailRegExp = RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        );
+                        if (!emailRegExp.hasMatch(value.trim())) return 'Email invalido';
+
+                        return null;
                       },
                     )
                   ),
@@ -145,6 +166,7 @@ class UserFormViewState extends ConsumerState<UserFormView> {
                       label: 'Cedula',
                       onChanged: (p0) {
                         cedula = p0;
+                        _formKey.currentState?.validate();
                       },
                       validator: validarCedulaEcuatoriana,
                       defaultValue: cedula,
@@ -194,9 +216,9 @@ class UserFormViewState extends ConsumerState<UserFormView> {
                   ),
                   OutlinedButton(
                     onPressed: ()async{
+                      final isValid = _formKey.currentState?.validate();
+                      if(!isValid!)return;
                       if (
-                        nombre== '' || apellido == '' || 
-                        cedula=='' || email =='' || 
                         tpUsuario == 0 || provincia == 0 || 
                         fechaNaci == null || genero == 0
                       ) {
