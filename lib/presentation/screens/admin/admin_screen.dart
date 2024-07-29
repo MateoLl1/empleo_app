@@ -35,7 +35,7 @@ class AdminScreen extends StatelessWidget {
                 IconCard(
                   icon: Icons.apartment,
                   label: 'Empresas',
-                  onTap: () => context.go('/crud-user'),
+                  onTap: () => context.go('/crud-empresa'),
                 ),
                 IconCard(
                   icon: Icons.supervisor_account,

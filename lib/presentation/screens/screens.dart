@@ -8,3 +8,4 @@ export './admin/admin_screen.dart';
 export './admin/crud_usuario_screen.dart';
 export './admin/crud_tp_usuario_screen.dart';
 export './admin/crud_provincia_screen.dart';
+export './admin/crud_empresa.dart';

@@ -45,6 +45,11 @@ final appRouter = GoRouter(
     ),
 
     GoRoute(
+      path: '/crud-empresa',
+      builder: (context, state) => const CrudEmpresaScreen(),
+    ),
+
+    GoRoute(
       path: '/crud-tp-user',
       builder: (context, state) => const  CrudTpUsuarioScreen(),
     ),

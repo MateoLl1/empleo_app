@@ -17,3 +17,19 @@ String? validarCedulaEcuatoriana(String? value) {
 
   return null;
 }
+
+String? validarRucEcuatoriano(String? value) {
+  if (value == null || value.trim().isEmpty) return 'Campo requerido';
+  if (value.length != 13) return 'El RUC debe tener 13 dígitos';
+
+  // Verifica que los primeros 10 dígitos formen una cédula válida
+  final cedula = value.substring(0, 10);
+  String? cedulaError = validarCedulaEcuatoriana(cedula);
+  if (cedulaError != null) return cedulaError;
+
+  // Verifica que los últimos 3 dígitos sean 001
+  if (value.substring(10) != '001') return 'El RUC debe terminar en 001';
+
+  return null;
+}
+
