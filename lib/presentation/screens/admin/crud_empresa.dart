@@ -1,15 +1,13 @@
-
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:empleo_app/domain/domain.dart';
-import 'package:empleo_app/domain/entities/empresa.dart';
-import 'package:empleo_app/presentation/providers/data/user_session_provider.dart';
+import 'package:empleo_app/presentation/providers/providers.dart';
 import 'package:empleo_app/presentation/widgets/helpers/validar_cedula_helper.dart';
+import 'package:empleo_app/presentation/widgets/table/empresa_table.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:empleo_app/presentation/providers/data/user_provider.dart';
 import 'package:empleo_app/presentation/widgets/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class CrudEmpresaScreen extends ConsumerStatefulWidget {
   const CrudEmpresaScreen({super.key});
@@ -22,45 +20,47 @@ class CrudEmpresaScreenState extends ConsumerState<CrudEmpresaScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(userProvider.notifier).getUsers();
+    ref.read(empresaProvider.notifier).getEmpresas();
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final users = ref.watch(userProvider);
+    final empresas = ref.watch(empresaProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           showDialog(
-            context: context, 
+            context: context,
             builder: (context) => Dialog(
-              child: SizedBox(
-                width: size.width*.6,
-                child: const EmpresaFormView()
-              )
-            ),
+                child: SizedBox(
+                    width: size.width * .6, child: const EmpresaFormView())),
           );
         },
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(title: const Text('Lista de empresas'),),
+      appBar: AppBar(
+        title: const Text('Lista de empresas'),
+      ),
       body: ListView.builder(
-        itemCount: users.length,
+        itemCount: empresas.length,
         itemBuilder: (BuildContext context, int index) {
-          final user = users[index];
-          return UserTable(user: user,index: index + 1,);
+          final emp = empresas[index];
+          return EmpresaTable(
+            empresa: emp,
+            index: index + 1,
+          );
         },
       ),
     );
   }
 }
 
-
-
 class EmpresaFormView extends ConsumerStatefulWidget {
   final Empresa? empresa;
   const EmpresaFormView({
-    super.key, this.empresa,
+    super.key,
+    this.empresa,
   });
 
   @override
@@ -77,26 +77,32 @@ class EmpresaFormViewState extends ConsumerState<EmpresaFormView> {
   String eslogan = '';
   String email = '';
   String password = '';
-  List<Provincia>? provincia = [];
-  DateTime? fechaNaci;
+  List<Provincia>? provincias = [];
 
   @override
   void initState() {
     super.initState();
-    nombre = widget.empresa?.nombre ?? '';
-    ruc = widget.empresa?.ruc ?? '';
-    owner = widget.empresa?.owner ?? '';
-    descripcion = widget.empresa?.descripcion ?? '';
-    logo = widget.empresa?.logo ?? '';
-    eslogan = widget.empresa?.eslogan ?? '';
-    email = widget.empresa?.email ?? '';
+    nombre = widget.empresa?.nombre ?? 'Optimsoft';
+    ruc = widget.empresa?.ruc ?? '1234567897001';
+    owner = widget.empresa?.owner ?? 'Marco Guayasamin';
+    descripcion = widget.empresa?.descripcion ?? 'Una empresa de TI';
+    eslogan = widget.empresa?.eslogan ?? 'Lo mejor es para ti';
+    email = widget.empresa?.email ?? 'optimsoft@gmail.com';
     password = widget.empresa?.password ?? '';
-    provincia = widget.empresa?.provincias ?? [];
+    provincias = widget.empresa?.provincias ?? [];
+    ref.read(provinciaProvider.notifier).getProvincia();
+  }
+
+  void _handleSelectionChanged(List<Provincia> selectedProvincias) {
+    setState(() {
+      provincias = selectedProvincias;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
+    final provinciasProvider = ref.watch(provinciaProvider);
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
@@ -209,21 +215,9 @@ class EmpresaFormViewState extends ConsumerState<EmpresaFormView> {
                   ),
                 ],
               ),
-
-
-
-
-
-
-              CalendarDatePicker(
-                initialDate: fechaNaci ?? DateTime.now(),
-                firstDate: DateTime(1950, 1, 1),
-                lastDate: DateTime.now(),
-                onDateChanged: (value) {
-                  setState(() {
-                    fechaNaci = value;
-                  });
-                },
+              ProvinciaCheckBoxList(
+                provincias: provinciasProvider,
+                onSelectionChanged: _handleSelectionChanged,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,8 +229,28 @@ class EmpresaFormViewState extends ConsumerState<EmpresaFormView> {
                   ),
                   OutlinedButton(
                     onPressed: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-
+                      final isValid = _formKey.currentState?.validate();
+                      if (!isValid!) return;
+                      // if (provincias!.isEmpty) return;
+                      final newEmpresa = Empresa(
+                        id: widget.empresa?.id,
+                        nombre: nombre,
+                        ruc: ruc,
+                        owner: owner,
+                        descripcion: descripcion,
+                        logo: logo,
+                        eslogan: eslogan,
+                        email: email,
+                        password: ruc,
+                        provincias: provincias
+                      );
+                      final apiRes = await ref.read(empresaProvider.notifier).save(newEmpresa);
+                      if (!apiRes) {
+                        customSnackBarMessage(context, 'Error de conexion');
+                        return;
+                      }else{
+                        ref.read(empresaProvider.notifier).getEmpresas();
+                        context.pop();
                       }
                     },
                     child: const Text('Agregar'),

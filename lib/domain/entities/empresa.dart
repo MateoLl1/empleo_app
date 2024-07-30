@@ -6,7 +6,7 @@ class Empresa {
   final String ruc;
   final String owner;
   final String descripcion;
-  final String logo;
+  final String? logo;
   final String eslogan;
   final String email;
   final String password;
@@ -18,7 +18,7 @@ class Empresa {
     required this.ruc,
     required this.owner,
     required this.descripcion,
-    required this.logo,
+    this.logo = 'https://www.nicepng.com/png/full/128-1280406_user-icon-png.png',
     required this.eslogan,
     required this.email,
     required this.password,
@@ -49,5 +49,26 @@ class Empresa {
       password: password ?? this.password,
       provincias: provincias ?? this.provincias,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Empresa{id: $id, nombre: $nombre, ruc: $ruc, owner: $owner, descripcion: $descripcion, logo: $logo, eslogan: $eslogan, email: $email, password: $password, provincias: $provincias}';
+  }
+
+  // Convertir la empresa a JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+      'ruc': ruc,
+      'owner': owner,
+      'descripcion': descripcion,
+      'logo': logo,
+      'eslogan': eslogan,
+      'email': email,
+      'password': ruc,
+      'provincias': provincias?.map((provincia) => provincia.toJson()).toList() ?? [],
+    };
   }
 }

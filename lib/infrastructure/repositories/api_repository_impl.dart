@@ -49,4 +49,40 @@ class ApiRepositoryImpl extends ApiRepository {
     return datasource.saveProvincia(provincia);
   }
   
+  @override
+  Future<bool> deleteEmpresaById(int id) {
+    return datasource.deleteEmpresaById(id);
+  }
+  
+  @override
+  Future<Empresa?> saveEmpresa(Empresa empresa) {
+    return datasource.saveEmpresa(empresa);
+  }
+  
+  @override
+  Future<List<Empresa>> getAllEmpresas() {
+    return datasource.getAllEmpresas();
+  }
+  
+  @override
+  Future<bool> deleteOfertaById(int id) {
+    return datasource.deleteOfertaById(id);
+  }
+  
+  @override
+  Future<List<Oferta>> getAllOfertas() {
+    return datasource.getAllOfertas();
+    
+  }
+  
+  @override
+  Future<List<Oferta>> getAllOfertasByEmpresaId(int id) {
+    return datasource.getAllOfertasByEmpresaId(id);
+  }
+  
+  @override
+  Future<Oferta?> saveOferta(Oferta oferta) {
+    return datasource.saveOferta(oferta);
+  }
+  
 }

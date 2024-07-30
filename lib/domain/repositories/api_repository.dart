@@ -19,5 +19,19 @@ abstract class ApiRepository {
 
   Future<bool> deleteProvinciaByID(int id);
 
+  Future<Empresa?> saveEmpresa(Empresa empresa);
+
+  Future<bool> deleteEmpresaById(int id);
+
+  Future<List<Empresa>> getAllEmpresas();
+
+  Future<List<Oferta>> getAllOfertas();
+
+  Future<List<Oferta>> getAllOfertasByEmpresaId(int id);
+
+  Future<Oferta?> saveOferta(Oferta oferta);
+
+  Future<bool> deleteOfertaById(int id);
+
 
 }

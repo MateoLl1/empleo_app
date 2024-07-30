@@ -19,4 +19,11 @@ class Provincia {
     id: id ?? this.id, 
     nombre: nombre ?? this.nombre,
   );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombre': nombre,
+    };
+  }
 }
