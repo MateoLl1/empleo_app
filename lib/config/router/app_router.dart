@@ -58,5 +58,13 @@ final appRouter = GoRouter(
       builder: (context, state) => const  CrudProvinciaScreen(),
     ),
 
+    GoRoute(
+      path: '/crud-oferta/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id'] ?? '0';
+        return CrudOfertasByEmpresa(idEmpresa: int.parse(id),);
+      },
+    ),
+
   ]
 );

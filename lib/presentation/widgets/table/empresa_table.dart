@@ -4,6 +4,7 @@ import 'package:empleo_app/presentation/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:empleo_app/domain/domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class EmpresaTable extends ConsumerWidget {
   final Empresa empresa;
@@ -26,14 +27,14 @@ class EmpresaTable extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       child: Table(
         columnWidths: const {
-          0: FixedColumnWidth(30),
+          0: FixedColumnWidth(10),
           1: FixedColumnWidth(100),
           2: FixedColumnWidth(100),
           3: FixedColumnWidth(100),
           4: FixedColumnWidth(100),
           5: FixedColumnWidth(100),
           6: FixedColumnWidth(100),
-          7: FixedColumnWidth(50),
+          7: FixedColumnWidth(70),
           8: FixedColumnWidth(10),
           9: FixedColumnWidth(10),
         },
@@ -53,34 +54,35 @@ class EmpresaTable extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.nombre, style: textStyle.titleLarge),
+                child: Text(empresa.nombre!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.ruc, style: textStyle.titleLarge),
+                child: Text(empresa.ruc!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.email, style: textStyle.titleLarge),
+                child: Text(empresa.email!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.owner, style: textStyle.titleLarge),
+                child: Text(empresa.owner!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.descripcion, style: textStyle.titleLarge),
+                child: Text(empresa.descripcion!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(empresa.eslogan, style: textStyle.titleLarge),
+                child: Text(empresa.eslogan!, style: textStyle.titleLarge),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 5),
-                child: FilledButton.tonalIcon(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: (){}, 
-                  label: const Text('Crear oferta')
+                child: FilledButton(
+                  onPressed: (){
+                    context.go('/crud-oferta/${empresa.id}');
+                  }, 
+                  child: const Text('Ofertas')
                 )
               ),
               Padding(

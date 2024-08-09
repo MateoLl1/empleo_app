@@ -6,3 +6,4 @@ export './data/user_session_provider.dart';
 export './data/tp_usuario_provider.dart';
 export './data/empresa_provider.dart';
 export './data/oferta_empresa_provider.dart';
+export './data/ofertas_empleo_provider.dart';

@@ -1,22 +1,24 @@
 
 
+
+
 import 'package:empleo_app/domain/domain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:empleo_app/presentation/providers/providers.dart';
 
-final ofertaEmpresaProvider = StateNotifierProvider<OfertaEmpresaNotifier,List<Oferta>>((ref) {
+final ofertasEmpleoProvider = StateNotifierProvider<OfertaNotifier,List<Oferta>>((ref) {
   final repository = ref.watch(apiRepositoryProvider);
-  return OfertaEmpresaNotifier(repository: repository);
+  return OfertaNotifier(repository: repository);
 });
 
 
-class OfertaEmpresaNotifier extends StateNotifier<List<Oferta>> {
+class OfertaNotifier extends StateNotifier<List<Oferta>> {
   final ApiRepository repository;
-  OfertaEmpresaNotifier({required this.repository}): super([]);
+  OfertaNotifier({required this.repository}): super([]);
 
-  Future<void> getOfertasByEmpresa(int id)async{
+  Future<void> getAllOfertas()async{
     state.clear();
-    final empresas = await repository.getAllOfertasByEmpresaId(id);
+    final empresas = await repository.getAllOfertas();
     if (empresas.isNotEmpty) {
       state = [...empresas];
     }
@@ -34,7 +36,6 @@ class OfertaEmpresaNotifier extends StateNotifier<List<Oferta>> {
 
   Future<bool> deleteOfertaById(int idEmpresa,int idOferta)async{
     final response = await repository.deleteOfertaById(idOferta);
-    getOfertasByEmpresa(idEmpresa);
     return response;
   }
 

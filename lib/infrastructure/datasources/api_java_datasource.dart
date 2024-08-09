@@ -151,7 +151,6 @@ class ApiJavaDatasource extends ApiDatasource {
       );
       return response.data;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -218,9 +217,17 @@ class ApiJavaDatasource extends ApiDatasource {
   }
   
   @override
-  Future<List<Oferta>> getAllOfertasByEmpresaId(int id) {
-    // TODO: implement getAllOfertasByEmpresaId
-    throw UnimplementedError();
+  Future<List<Oferta>> getAllOfertasByEmpresaId(int id)async {
+    try {
+      final response = await _dio.get(
+        '/oferta/id-empresa',
+        queryParameters: {'id' : id}
+      );
+      final List<dynamic> data = response.data;
+      return data.map((e) => OfertaMapper.toEntity(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
   
   @override
@@ -230,22 +237,22 @@ class ApiJavaDatasource extends ApiDatasource {
       '/oferta',
        data: {
           "id": oferta.id,
-          "titulo":oferta.titulo,
-          "subtitulo":oferta.subTitulo,
-          "descripcion":oferta.descripcion,
-          "modalidad":oferta.modalidad,
-          "ubicacion":oferta.ubicacion,
-          "area":oferta.area,
-          "tiempo":oferta.tiempo,
-          "vacantes":oferta.vacantes,
-          "experiencia":oferta.experiencia,
-          "SALARIO":oferta.salario,
-          "fechaRegistro":oferta.fechaRegistro,
-          "estado":oferta.estado,
+          "titulo": oferta.titulo,
+          "subTitulo": oferta.subTitulo,
+          "descripcion": oferta.descripcion,
+          "modalidad": oferta.modalidad,
+          "ubicacion": oferta.ubicacion,
+          "area": oferta.area,
+          "tiempo": oferta.tiempo,
+          "vacantes": oferta.vacantes,
+          "experiencia": oferta.experiencia,
+          "salario": oferta.salario,
+          "fechaRegistro": DateTime.now().toIso8601String(),
+          "estado": oferta.estado,
           "empresa": {
-            "em_id": oferta.empresa?.id
+            "em_id": oferta.empresa?.id,
           }
-       }
+        },
       );
       return OfertaMapper.toEntity(response.data);
     } catch (e) {

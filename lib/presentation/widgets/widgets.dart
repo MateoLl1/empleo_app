@@ -15,3 +15,6 @@ export './table/user_table.dart';
 export './alerts/custom_alert.dart';
 export './table/custom_row_provincia.dart';
 export './checkbox/provincia_checkbox_list.dart';
+export './cards/oferta_card.dart';
+export './checkbox/modalidad_checkbox.dart';
+export './checkbox/area_trabajo_checkbox.dart';

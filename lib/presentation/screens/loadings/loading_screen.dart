@@ -30,8 +30,10 @@ class LoadingScreenState extends ConsumerState<LoadingLoginScreen> {
         context.go('/empresa') ;
       }
       else if (user.tpUsuario?.id == 7) {
-        context.go('/home') ;
+        context.go('/home');
       }
+    }else{
+      context.go('/login');
     }
   }
 

@@ -2,27 +2,27 @@ import 'package:empleo_app/domain/domain.dart';
 
 class Empresa {
   final int? id;
-  final String nombre;
-  final String ruc;
-  final String owner;
-  final String descripcion;
+  final String? nombre;
+  final String? ruc;
+  final String? owner;
+  final String? descripcion;
   final String? logo;
-  final String eslogan;
-  final String email;
-  final String password;
+  final String? eslogan;
+  final String? email;
+  final String? password;
   final List<Provincia>? provincias;
 
   Empresa({
     this.id,
-    required this.nombre,
-    required this.ruc,
-    required this.owner,
-    required this.descripcion,
+    this.nombre,
+    this.ruc,
+    this.owner,
+    this.descripcion,
     this.logo = 'https://www.nicepng.com/png/full/128-1280406_user-icon-png.png',
-    required this.eslogan,
-    required this.email,
-    required this.password,
-    required this.provincias,
+    this.eslogan,
+    this.email,
+    this.password,
+    this.provincias,
   });
 
   Empresa copyWith({

@@ -33,4 +33,10 @@ class ProvinciaNotifier extends StateNotifier<List<Provincia>> {
     return null;
   }
 
+  String getProvinciaById(int id) {
+    final prov = state.firstWhere((provincia) => provincia.id == id);
+    return prov.nombre ?? 'Indefinido';
+    
+  }
+
 }

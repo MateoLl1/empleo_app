@@ -54,11 +54,34 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          ...user.map((e) => const Placeholder(),)
-        ],
-      ),
+      body: const HomeOfertasEmpleo(),
+    );
+  }
+}
+
+class HomeOfertasEmpleo extends ConsumerStatefulWidget {
+  const HomeOfertasEmpleo({super.key});
+
+  @override
+  HomeOfertasEmpleoState createState() => HomeOfertasEmpleoState();
+}
+
+class HomeOfertasEmpleoState extends ConsumerState<HomeOfertasEmpleo> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(ofertasEmpleoProvider.notifier).getAllOfertas();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ofertas = ref.watch(ofertasEmpleoProvider);
+    return ListView.builder(
+      itemCount: ofertas.length,
+      itemBuilder: (BuildContext context, int index) {
+        final oferta = ofertas[index];
+        return OfertaCard(oferta: oferta,isAdmin: false,);
+      },
     );
   }
 }

@@ -1,9 +1,6 @@
 
-
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+// import 'package:google_fonts/google_fonts.dart';
 
 const List<Color> colorListApp = [
   Colors.blue,
@@ -27,31 +24,31 @@ class AppTheme {
     brightness: isDark ? Brightness.dark : Brightness.light,
     colorSchemeSeed: colorListApp[selectedColor],
     textTheme: TextTheme(
-      titleLarge: GoogleFonts.montserrat(
-        color: isDark ? Colors.white : Colors.black
-      ),
-
-      bodyLarge: GoogleFonts.montserrat(
+      titleLarge: TextStyle(
         color: isDark ? Colors.white : Colors.black,
-        fontSize: 15
+        // fontFamily: 'Montserrat',
       ),
-      titleMedium: GoogleFonts.montserrat(
-        color: isDark ? Colors.white : Colors.black
+      bodyLarge: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        fontSize: 15,
+        // fontFamily: 'Montserrat',
       ),
-      labelLarge: GoogleFonts.montserrat(
-        color: isDark ? Colors.white : Colors.black
+      titleMedium: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        // fontFamily: 'Montserrat',
       ),
-      bodyMedium: GoogleFonts.montserrat(
-        color: isDark ? Colors.white : Colors.black
+      labelLarge: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        // fontFamily: 'Montserrat',
       ),
-      
-      //ERROR DE VALIDATOR EN FIELDS
-      bodySmall: GoogleFonts.montserrat(
-        color: isDark ? Colors.white : Colors.black
+      bodyMedium: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        // fontFamily: 'Montserrat',
+      ),
+      bodySmall: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        // fontFamily: 'Montserrat',
       ),
     )
   );
-
-
 }
-
